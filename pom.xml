@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>lizhi-edu-user</module>
+        <module>lizhi-edu-common</module>
     </modules>
     <packaging>pom</packaging>
 
