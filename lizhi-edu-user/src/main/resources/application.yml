@@ -43,3 +43,7 @@ spring:
     host: zuoquanzhangongchengshi.site
     port: 6379
     password: xxadmin123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
