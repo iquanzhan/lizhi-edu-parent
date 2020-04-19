@@ -10,6 +10,7 @@
     <modules>
         <module>lizhi-edu-user</module>
         <module>lizhi-edu-common</module>
+        <module>lizhi-edu-admin-server</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -38,6 +39,7 @@
         <fastjson.version>1.2.60</fastjson.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <hutool.version>5.1.2</hutool.version>
+        <spring-boot-admin.version>2.1.0</spring-boot-admin.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -55,6 +57,15 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>2.2.0.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--spring boot admin-->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>${spring-boot-admin.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
