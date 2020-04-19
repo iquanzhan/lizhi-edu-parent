@@ -10,7 +10,6 @@
     <modules>
         <module>lizhi-edu-user</module>
         <module>lizhi-edu-common</module>
-        <module>lizhi-eureka-server</module>
     </modules>
     <packaging>pom</packaging>
 
