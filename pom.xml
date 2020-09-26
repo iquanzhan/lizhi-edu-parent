@@ -11,6 +11,7 @@
         <module>lizhi-edu-user</module>
         <module>lizhi-edu-common</module>
         <module>lizhi-edu-admin-server</module>
+        <module>code-generator</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -34,7 +35,7 @@
         <lombok.version>1.16.18</lombok.version>
         <mysql.version>8.0.18</mysql.version>
         <druid.verison>1.1.16</druid.verison>
-        <mybatis-plus.spring.boot.verison>3.1.0</mybatis-plus.spring.boot.verison>
+        <mybatis-plus.spring.boot.verison>3.4.0</mybatis-plus.spring.boot.verison>
         <pagehelper.version>1.2.7</pagehelper.version>
         <fastjson.version>1.2.60</fastjson.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
