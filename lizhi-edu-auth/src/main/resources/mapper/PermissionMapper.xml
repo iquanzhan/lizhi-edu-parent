@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengxiaoxiao.lizhiedu.auth.mapper.PermissionMapper">
+
+    <select id="selectAllPermissionValue" resultType="java.lang.String">
+        select key from permission where type=2 and delete_status=0
+    </select>
+
+    <select id="selectPermissionValueByUserId" resultType="java.lang.String">
+        SELECT
+        p.key
+        FROM user_role ur
+        INNER JOIN role_permission rp ON rp.role_id = ur.role_id
+        INNER JOIN permission p ON p.id = rp.permission_id
+        WHERE
+            ur.user_id = #{userId}
+        AND p.type = 2
+        AND ur.delete_status = 0
+        AND p.delete_status = 0
+        AND rp.delete_status = 0
+    </select>
+    <select id="getPermissionByUserIdType" resultType="com.chengxiaoxiao.lizhiedu.auth.entity.Permission">
+        select p.* from user_role ur inner join role_permission rp on ur.ROLE_ID=rp.ROLE_ID inner join permission p on rp.permission_id=p.id where ur.user_id=#{userId} and ur.delete_status=0 and rp.delete_status=0 and p.delete_status=0 and type=#{type} order by p.sort
+    </select>
+</mapper>

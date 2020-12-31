@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.chengxiaoxiao.lizhiedu.database.DatabaseAutoConfiguration
+org.springframework.context.ApplicationContextInitializer=\
+    com.chengxiaoxiao.lizhiedu.database.init.ApplicationDatabaseInitializer

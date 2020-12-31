@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>代码生成器主页</title>
+
+    <link href="/css/element-ui/icon.css" rel="stylesheet">
+    <link href="/css/element-ui/index.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0 !important;
+        }
+
+        .box-card {
+            margin-bottom: 20px;
+        }
+
+        .el-header {
+            padding: 0 !important;
+        }
+
+        .container {
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            width: 100%;
+        }
+
+        .container .header {
+            height: 60px;
+            line-height: 60px;
+            background: #20A0FF;
+            color: #fff;
+        }
+
+        .container .header .logo {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header>
+            代码生成器
+            <i class="el-icon-setting" style="color:red">全局设置</i>
+            <el-row class="container">
+                <el-col :span="24" class="header">
+                    <el-col :span="20" class="logo">
+                        <span style="font-size: 22px;">代码生成器</span>
+                    </el-col>
+                    <el-col :span="4" class="userinfo" align="right" style="padding-right: 30px">
+                        <i class="el-icon-setting" style="cursor: pointer;" @click="dialogVisible = true">&nbsp;&nbsp;全局设置</i>
+                    </el-col>
+                </el-col>
+            </el-row>
+        </el-header>
+        <el-main>
+            <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="130px">
+                <el-row>
+                    <el-col :span="8">
+                        <el-form-item label="数据库" prop="dbType">
+                            <el-select v-model="formData.dbType" :style="{width: '100%'}" placeholder="请选择">
+                                <el-option
+                                        v-for="item in dbTypeOptions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="数据库IP" prop="dbIp">
+                            <el-input v-model="formData.dbIp" placeholder="请输入数据库IP" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="数据库端口号" prop="dbPort">
+                            <el-input v-model="formData.dbPort" placeholder="请输入数据库端口号" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="8">
+                        <el-form-item label="数据库模式名称" prop="dbSchema">
+                            <el-input v-model="formData.dbSchema" placeholder="请输入数据库模式名称" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="数据库用户名" prop="dbUserName">
+                            <el-input v-model="formData.dbUserName" placeholder="请输入数据库用户名" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="数据库密码" prop="dbPassword">
+                            <el-input v-model="formData.dbPassword" placeholder="请输入数据库密码" clearable show-password
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="8">
+                        <el-form-item label="项目模块名称" prop="moduleName">
+                            <el-input v-model="formData.moduleName" placeholder="请输入项目模块名称" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="父级包" prop="parentPackage">
+                            <el-input v-model="formData.parentPackage" placeholder="请输入父级包" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="数据库表" prop="tableName">
+                            <el-input v-model="formData.tableName" placeholder="请输入数据库表 多个用逗号分隔" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                </el-row>
+
+                <el-form-item size="large">
+                    <el-button type="primary" @click="generateBackendCode">生成后端代码</el-button>
+                    <el-button type="success" @click="generateFrontendCode">生成前端代码</el-button>
+                </el-form-item>
+            </el-form>
+        </el-main>
+
+        <el-dialog
+                top="5vh"
+                title="全局设置"
+                :visible.sync="dialogVisible"
+                width="60%">
+              <span>
+                  <el-form ref="globalForm" :model="globalFormData" :rules="globalRules" size="medium"
+                           label-width="100px">
+                      <el-card class="box-card">
+                          <h4 style="margin-top: 0px;margin-bottom: 10px;">基本信息</h4>
+                    <el-row>
+                        <el-col :span="12">
+                        <el-form-item label="作者" prop="author">
+                            <el-input v-model="globalFormData.author" placeholder="请输入作者"
+                                      clearable :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                        <el-form-item label="主键策略" prop="idType">
+                            <el-select v-model="globalFormData.idType" placeholder="请选择主键策略" clearable
+                                       :style="{width: '100%'}">
+                                <el-option v-for="(item, index) in idTypeOptions" :key="index" :label="item.label"
+                                           :value="item.value"
+                                           :disabled="item.disabled"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    </el-row>
+                      </el-card>
+
+
+                      <el-card class="box-card">
+                          <h4 style="margin-top: 0px;margin-bottom: 10px;">包名信息</h4>
+                <el-row>
+                     <el-col :span="12">
+                        <el-form-item label-width="100px" label="Entity包名" prop="entityName">
+                            <el-input v-model="globalFormData.entityName" placeholder="请输入Entity包名" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label-width="130px" label="Mapper包名" prop="mapperName">
+                            <el-input v-model="globalFormData.mapperName" placeholder="请输入Mapper包名" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label-width="100px" label="Service包名" prop="serviceName">
+                            <el-input v-model="globalFormData.serviceName" placeholder="请输入Service包名" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label-width="130px" label="Controller包名" prop="controllerName">
+                            <el-input v-model="globalFormData.controllerName" placeholder="请输入Controller包名" clearable
+                                      :style="{width: '100%'}"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                      </el-card>
+
+                      <el-card class="box-card">
+                          <h4 style="margin-top: 0px;margin-bottom: 10px;">功能信息</h4>
+                      <el-row>
+                    <el-col :span="6">
+                        <el-form-item label-width="100px" label="Lombok" prop="isLombok" required>
+                            <el-switch v-model="globalFormData.isLombok"></el-switch>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label-width="120px" label="Restful风格API" prop="isRestful" required>
+                            <el-switch v-model="globalFormData.isRestful"></el-switch>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label-width="120px" label="Swagger" prop="isSwagger" required>
+                            <el-switch v-model="globalFormData.isSwagger"></el-switch>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label-width="150px" label="排除接口首字母I" prop="isServiceFirstLetter" required>
+                            <el-switch v-model="globalFormData.isServiceFirstLetter"></el-switch>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                      </el-card>
+            </el-form>
+              </span>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitForm">确 定</el-button>
+              </span>
+        </el-dialog>
+    </el-container>
+</div>
+</body>
+<script src="/js/vue/vue.js"></script>
+<script src="/js/element-ui/index.js"></script>
+<script src="/js/axios/axios.js"></script>
+
+<script>
+
+    const localStorageKey = "codegenerator.globalSetting";
+    const customerStorageKey = "codegenerator.customerSetting";
+
+    const app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                dialogVisible: false,
+                globalFormData: {
+                    author: undefined,
+                    idType: "5",
+                    mapperName: "mapper",
+                    controllerName: "controller",
+                    isLombok: true,
+                    isRestful: true,
+                    entityName: "entity",
+                    serviceName: "service",
+                    isSwagger: true,
+                    isServiceFirstLetter: true
+                },
+                formData: {
+                    dbIp: undefined,
+                    dbSchema: undefined,
+                    dbUserName: undefined,
+                    dbPassword: "123456789",
+                    dbPort: "5236",
+                    moduleName: undefined,
+                    parentPackage: "com.chengxiaoxiao",
+                    tableName: "",
+                    dbType: "0"
+                },
+                globalRules: {
+                    author: [{
+                        required: true,
+                        message: '请输入作者',
+                        trigger: 'blur'
+                    }],
+                    idType: [{
+                        required: true,
+                        message: '请选择主键策略',
+                        trigger: 'change'
+                    }],
+                    mapperName: [{
+                        required: true,
+                        message: '请输入Mapper包名',
+                        trigger: 'blur'
+                    }],
+                    controllerName: [{
+                        required: true,
+                        message: '请输入Controller包名',
+                        trigger: 'blur'
+                    }],
+                    entityName: [{
+                        required: true,
+                        message: '请输入Entity包名',
+                        trigger: 'blur'
+                    }],
+                    serviceName: [{
+                        required: true,
+                        message: '请输入Service包名',
+                        trigger: 'blur'
+                    }],
+                },
+                rules: {
+                    dbIp: [{
+                        required: true,
+                        message: '请输入数据库IP',
+                        trigger: 'blur'
+                    }],
+                    dbType: [{
+                        required: true,
+                        message: '请选择数据库',
+                        trigger: 'blur'
+                    }],
+                    dbSchema: [{
+                        required: true,
+                        message: '请输入数据库模式名称',
+                        trigger: 'blur'
+                    }],
+                    dbUserName: [{
+                        required: true,
+                        message: '请输入数据库用户名',
+                        trigger: 'blur'
+                    }],
+                    dbPassword: [{
+                        required: true,
+                        message: '请输入数据库密码',
+                        trigger: 'blur'
+                    }],
+                    dbPort: [{
+                        required: true,
+                        message: '请输入数据库端口号',
+                        trigger: 'blur'
+                    }],
+
+                    moduleName: [{
+                        required: true,
+                        message: '请输入项目模块名称',
+                        trigger: 'blur'
+                    }],
+                    parentPackage: [{
+                        required: true,
+                        message: '请输入父级包',
+                        trigger: 'blur'
+                    }],
+                    tableName: [{
+                        required: true,
+                        message: '请输入数据库表 多个用逗号分隔',
+                        trigger: 'blur'
+                    }],
+                },
+                idTypeOptions: [
+                    {
+                        "label": "AUTO",
+                        "value": "0"
+                    }, {
+                        "label": "NONE",
+                        "value": "1"
+                    }, {
+                        "label": "INPUT",
+                        "value": "2"
+                    }, {
+                        "label": "ID_WORKER",
+                        "value": "3"
+                    }, {
+                        "label": "UUID",
+                        "value": "4"
+                    }, {
+                        "label": "ID_WORKER_STR",
+                        "value": "5"
+                    }],
+                dbTypeOptions: [{
+                    value: '0',
+                    label: '达梦数据库'
+                }, {
+                    value: '1',
+                    label: 'MySql'
+                }],
+            }
+        },
+        computed: {},
+        watch: {},
+        created() {
+            const globalData = localStorage.getItem(localStorageKey);
+            console.log("get global localstorage" + globalData);
+            if (globalData) {
+                this.globalFormData = JSON.parse(globalData);
+            }
+
+            const customerData = localStorage.getItem(customerStorageKey);
+            console.log("get customer localstorage" + globalData);
+            if (customerData) {
+                this.formData = JSON.parse(customerData);
+            }
+
+        },
+        mounted() {
+        },
+        methods: {
+            submitForm() {
+                this.$refs['globalForm'].validate(valid => {
+                    if (!valid) return
+                    //保存至localstorage
+                    console.log("save localstorage" + JSON.stringify(this.globalFormData));
+                    localStorage.setItem(localStorageKey, JSON.stringify(this.globalFormData));
+
+                    this.dialogVisible = false
+                })
+            },
+            //生成前端代码
+            generateFrontendCode() {
+                this.$refs['elForm'].validate(valid => {
+                    if (!valid) return
+                    this.saveCustomerForm()
+                    let data = {...this.formData, ...this.globalFormData};
+
+                    axios.post("/index/frontend", data)
+                        .then(res => {
+                            let a = document.createElement("a");
+                            a.href = "/assets" + res.data;
+                            a.click();
+                        }).catch(err => {
+                        alert("error");
+                    })
+                })
+
+            },
+            //生成后端代码
+            generateBackendCode() {
+                this.$refs['elForm'].validate(valid => {
+                    if (!valid) return
+                    this.saveCustomerForm()
+                    let data = {...this.formData, ...this.globalFormData};
+                    axios.post("/index/backend", data)
+                        .then(res => {
+
+                            let a = document.createElement("a");
+                            a.href = "/assets" + res.data;
+                            a.click();
+
+                        }).catch(err => {
+                        alert("error");
+                    })
+                })
+            },
+            //保存自定义表单
+            saveCustomerForm() {
+                //保存至localstorage
+                console.log("save customer localstorage" + JSON.stringify(this.formData));
+                localStorage.setItem(customerStorageKey, JSON.stringify(this.formData));
+            }
+        }
+    })
+</script>
+
+</html>

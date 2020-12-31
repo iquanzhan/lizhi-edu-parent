@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        namespace: cea11524-f855-433d-b14e-af35a347f1c3
+        server-addr: 192.168.4.154:8848
+        file-extension: yml

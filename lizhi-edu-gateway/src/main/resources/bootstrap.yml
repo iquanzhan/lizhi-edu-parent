@@ -1,0 +1,40 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: lizhi-edu-gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        shared-configs:
+          - data-id: nacos-common.yml
+        extension-configs:
+          - data-id: nacos-common.yml
+            refresh: true
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            exposedHeaders:
+              - content-type
+            allowedHeaders:
+              - content-type
+              - token
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowCredentials: true
+
+
+#默认展示所有节点
+management:
+  endpoint:
+    health:
+      show-details: always
+    logfile:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"

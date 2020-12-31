@@ -1,0 +1,6 @@
+server:
+  port: 10002
+
+lizhi:
+  code:
+    upload-path: ./upload

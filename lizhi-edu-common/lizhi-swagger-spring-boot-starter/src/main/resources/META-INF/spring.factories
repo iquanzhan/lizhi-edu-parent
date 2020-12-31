@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.chengxiaoxiao.lizhiedu.swagger.SwaggerAutoConfiguration,\
+  com.chengxiaoxiao.lizhiedu.swagger.config.WebMvcConfiguration

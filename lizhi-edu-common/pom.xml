@@ -4,28 +4,65 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>lizhi-edu-parent</artifactId>
-        <groupId>com.chengxiaoxiao.edu</groupId>
+        <groupId>com.chengxiaoxiao</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>lizhi-edu-common</artifactId>
+    <packaging>pom</packaging>
+    <name>${project.artifactId}</name>
+    <description>定义一些常用的公共模块和统一功能的配置，如日志、swagger、security、定时任务等</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>lizhi-edu-common-core</module>
+        <module>lizhi-security-spring-boot-starter</module>
+        <module>lizhi-log-spring-boot-starter</module>
+        <module>lizhi-swagger-spring-boot-starter</module>
+        <module>lizhi-database-spring-boot-starter</module>
+        <module>lizhi-fastjson-spring-boot-starter</module>
+        <module>lizhi-login-spring-boot-starter</module>
+        <module>lizhi-cors-spring-boot-starter</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.chengxiaoxiao</groupId>
+                <artifactId>lizhi-edu-common-core</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.chengxiaoxiao</groupId>
+                <artifactId>lizhi-swagger-spring-boot-starter</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.chengxiaoxiao</groupId>
+                <artifactId>lizhi-log-spring-boot-starter</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.chengxiaoxiao</groupId>
+                <artifactId>lizhi-login-spring-boot-starter</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.chengxiaoxiao</groupId>
+                <artifactId>lizhi-fastjson-spring-boot-starter</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.chengxiaoxiao</groupId>
+                <artifactId>lizhi-database-spring-boot-starter</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.chengxiaoxiao</groupId>
+                <artifactId>lizhi-security-spring-boot-starter</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>

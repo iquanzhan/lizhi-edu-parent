@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengxiaoxiao.lizhiedu.auth.mapper.RolePermissionMapper">
+
+    <select id="selectPermissionListByRoleId" resultType="com.chengxiaoxiao.lizhiedu.auth.entity.Permission">
+select p.* from ROLE_PERMISSION rp,PERMISSION p,ROLE r where p.id=rp.permission_id and r.id=rp.ROLE_ID and p.DELETE_STATUS=0 and rp.DELETE_STATUS=0 and r.DELETE_STATUS=0 and r.ID=#{roleId}
+    </select>
+</mapper>

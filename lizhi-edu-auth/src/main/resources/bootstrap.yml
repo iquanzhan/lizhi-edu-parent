@@ -1,0 +1,62 @@
+server:
+  port: 10001
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  application:
+    name: lizhi-edu-auth
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        shared-configs:
+          - data-id: nacos-common.yml
+        extension-configs:
+          - data-id: nacos-common.yml
+            refresh: true
+
+#默认展示所有节点
+management:
+  endpoint:
+    health:
+      show-details: always
+    logfile:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+lizhi:
+  #接口文档
+  swagger:
+    base-package: com.chengxiaoxiao.lizhiedu.auth.controller
+    title: 用户权限模块
+    description: 提供用户鉴权、验证、权限分发的功能
+    version: 1.0.0
+    enabled-auth: true
+    token-header: TOKEN
+
+
+#开启sql显示
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: id_worker_str
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.chengxiaoxiao.lizhiedu.auth.entity
+
+
+logging:
+  level:
+    com:
+      chengxiaoxiao: info
+  file:
+    name: logs/lizhi-edu-auth/debug.log

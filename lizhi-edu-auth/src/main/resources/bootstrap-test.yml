@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        namespace: d3f0ddff-1047-4eaa-9927-affa4b1f70ea
+        server-addr: ${NACOS_SERVER_IP}:8848
+        file-extension: yml
