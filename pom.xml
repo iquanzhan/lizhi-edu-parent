@@ -32,7 +32,7 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-codec.version>1.13</commons-codec.version>
         <druid.version>1.1.22</druid.version>
-        <fastjson.version>1.2.60</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <oracle.version>11.2.0.3</oracle.version>
         <swagger.version>3.0.0</swagger.version>
         <swagger-annotations.version>1.5.22</swagger-annotations.version>
